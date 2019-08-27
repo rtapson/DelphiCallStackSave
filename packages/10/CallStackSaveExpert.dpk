@@ -25,6 +25,7 @@ package CallStackSaveExpert;
 {$IMAGEBASE $400000}
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
+{$LIBSUFFIX '230'}
 {$IMPLICITBUILD ON}
 
 requires
@@ -33,15 +34,15 @@ requires
   RestComponents;
 
 contains
-  CallStackSaveMain in 'CallStackSaveMain.pas',
-  CallStackKeyboardBinding in 'CallStackKeyboardBinding.pas',
-  CallStack in 'CallStack.pas',
-  OfflineCallStackForm in 'OfflineCallStackForm.pas' {OfflineCallStack},
-  CallStackFrame in 'CallStackFrame.pas' {OfflineCallStackFrame: TFrame},
-  CallStackMenus in 'CallStackMenus.pas',
-  IDEOptionsFrame in 'IDEOptionsFrame.pas' {OfflineCallstackOptionsFrame: TFrame},
-  CallStackIDEOptions in 'CallStackIDEOptions.pas',
-  ApplicationOptions in 'ApplicationOptions.pas',
-  FileNameCreator in 'FileNameCreator.pas';
+  ApplicationOptions in '..\..\source\ApplicationOptions.pas',
+  CallStack in '..\..\source\CallStack.pas',
+  CallStackFrame in '..\..\source\CallStackFrame.pas',
+  CallStackIDEOptions in '..\..\source\CallStackIDEOptions.pas',
+  CallStackKeyboardBinding in '..\..\source\CallStackKeyboardBinding.pas',
+  CallStackMenus in '..\..\source\CallStackMenus.pas',
+  CallStackSaveMain in '..\..\source\CallStackSaveMain.pas',
+  FileNameCreator in '..\..\source\FileNameCreator.pas',
+  IDEOptionsFrame in '..\..\source\IDEOptionsFrame.pas',
+  OfflineCallStackForm in '..\..\source\OfflineCallStackForm.pas';
 
 end.
