@@ -9,9 +9,12 @@ type
     procedure SetJsonFileSavePath(const Value: string);
     function GetBaseFileName: string;
     procedure SetBaseFileName(const Value: string);
+    function GetRemoveUnreachableStackFrames: Boolean;
+    procedure SetRemoveUnreachableStackFrames(const Value: Boolean);
 
     property JsonFileSavePath: string read GetJsonFileSavePath write SetJsonFileSavePath;
     property BaseFileName: string read GetBaseFileName write SetBaseFileName;
+    property RemoveUnreachableStackFrames: Boolean read GetRemoveUnreachableStackFrames write SetRemoveUnreachableStackFrames;
   end;
 
 function AppOptions: IOfflineCallStackOptions;
@@ -26,21 +29,24 @@ var
   FAppOptions: IOfflineCallStackOptions;
 
 const
-  //This constant represents the registry key the auto save settings are stored under.
   strRegistryKey = 'Software\TapperMedia\OfflineCallStack\';
   strIniSection = 'Settings';
   strJsonFilePath = 'JsonFileSavePath';
   strBaseFileName = 'BaseFileName';
+  strRemoveUnreachableStackFrames = 'RemoveUnreachableStackFrames';
 
 type
   TApplicationOptions = class(TInterfacedObject, IOfflineCallStackOptions)
   private
     FJsonFileSavePath: string;
     FBaseFileName: string;
+    FRemoveUnreachableStackFrames: Boolean;
     function GetJsonFileSavePath: string;
     procedure SetJsonFileSavePath(const Value: string);
     function GetBaseFileName: string;
     procedure SetBaseFileName(const Value: string);
+    function GetRemoveUnreachableStackFrames: Boolean;
+    procedure SetRemoveUnreachableStackFrames(const Value: Boolean);
   protected
     procedure LoadSettings;
     procedure SaveSettings;
@@ -50,6 +56,7 @@ type
 
     property JsonFileSavePath: string read GetJsonFileSavePath write SetJsonFileSavePath;
     property BaseFileName: string read GetBaseFileName write SetBaseFileName;
+    property RemoveUnreachableStackFrames: Boolean read GetRemoveUnreachableStackFrames write SetRemoveUnreachableStackFrames;
   end;
 
 function AppOptions: IOfflineCallStackOptions;
@@ -80,6 +87,11 @@ begin
   Result := IncludeTrailingPathDelimiter(FJsonFileSavePath);
 end;
 
+function TApplicationOptions.GetRemoveUnreachableStackFrames: Boolean;
+begin
+  Result := FRemoveUnreachableStackFrames;
+end;
+
 procedure TApplicationOptions.LoadSettings;
 var
   reg: TRegIniFile;
@@ -88,6 +100,7 @@ begin
   try
     FJsonFileSavePath := reg.ReadString(strRegistryKey + strIniSection, strJsonFilePath, '');
     FBaseFileName := reg.ReadString(strRegistryKey + strIniSection, strBaseFileName, 'CallStack');
+    FRemoveUnreachableStackFrames := reg.ReadBool(strRegistryKey + strIniSection, strRemoveUnreachableStackFrames, False);
   finally
     reg.Free;
   end;
@@ -101,6 +114,7 @@ begin
   try
     reg.WriteString(strRegistryKey + strIniSection, strJsonFilePath, FJsonFileSavePath);
     reg.WriteString(strRegistryKey + strIniSection, strBaseFileName, FBaseFileName);
+    reg.WriteBool(strRegistryKey + strIniSection, strRemoveUnreachableStackFrames, FRemoveUnreachableStackFrames);
   finally
     reg.Free;
   end;
@@ -114,6 +128,11 @@ end;
 procedure TApplicationOptions.SetJsonFileSavePath(const Value: string);
 begin
   FJsonFileSavePath := Value;
+end;
+
+procedure TApplicationOptions.SetRemoveUnreachableStackFrames(const Value: Boolean);
+begin
+  FRemoveUnreachableStackFrames := Value;
 end;
 
 initialization

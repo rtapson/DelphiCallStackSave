@@ -22,20 +22,13 @@ type
 
 implementation
 
-uses
-  ApplicationOptions;
-
 { TCallStackIDEOptions }
 
 procedure TCallStackIDEOptions.DialogClosed(Accepted: Boolean);
-var
-  JsonPath, BaseFileName: string;
 begin
   if Accepted then
   begin
-    FFrame.FinaliseFrame(JsonPath, BaseFileName);
-    AppOptions.JsonFileSavePath := JsonPath;
-    AppOptions.BaseFileName := BaseFileName;
+    FFrame.FinaliseFrame;
   end;
 end;
 
@@ -44,7 +37,7 @@ begin
   if AFrame is TOfflineCallstackOptionsFrame then
   begin
     FFrame := AFrame as TOfflineCallstackOptionsFrame;
-    FFrame.InitializeFrame(AppOptions.JsonFileSavePath, AppOptions.BaseFileName);
+    FFrame.InitializeFrame;
   end;
 end;
 

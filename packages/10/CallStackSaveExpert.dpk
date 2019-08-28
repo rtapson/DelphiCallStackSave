@@ -36,13 +36,13 @@ requires
 contains
   ApplicationOptions in '..\..\source\ApplicationOptions.pas',
   CallStack in '..\..\source\CallStack.pas',
-  CallStackFrame in '..\..\source\CallStackFrame.pas',
   CallStackIDEOptions in '..\..\source\CallStackIDEOptions.pas',
   CallStackKeyboardBinding in '..\..\source\CallStackKeyboardBinding.pas',
   CallStackMenus in '..\..\source\CallStackMenus.pas',
   CallStackSaveMain in '..\..\source\CallStackSaveMain.pas',
   FileNameCreator in '..\..\source\FileNameCreator.pas',
-  IDEOptionsFrame in '..\..\source\IDEOptionsFrame.pas',
-  OfflineCallStackForm in '..\..\source\OfflineCallStackForm.pas';
+  CallStackFrame in '..\..\source\CallStackFrame.pas' {OfflineCallStackFrame: TFrame},
+  IDEOptionsFrame in '..\..\source\IDEOptionsFrame.pas' {OfflineCallstackOptionsFrame: TFrame},
+  OfflineCallStackForm in '..\..\source\OfflineCallStackForm.pas' {OfflineCallStack};
 
 end.

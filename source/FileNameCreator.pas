@@ -39,7 +39,7 @@ var
 begin
   FileCount := Length(TDirectory.GetFiles(AppOptions.JsonFileSavePath, '*.json'));
   if FileCount = 0 then
-    Result := Format('%s).json', [AppOptions.BaseFileName])
+    Result := Format('%s.json', [AppOptions.BaseFileName])
   else
     Result := Format('%s (%d).json', [AppOptions.BaseFileName, FileCount + 1]);
 end;

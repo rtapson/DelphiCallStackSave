@@ -12,30 +12,36 @@ type
     JsonFileSavePathLabel: TLabel;
     Label1: TLabel;
     BaseFileNameEdit: TEdit;
+    RemoveUnreachableStackFramesCheckbox: TCheckBox;
   private
     { Private declarations }
   public
     { Public declarations }
-    procedure InitializeFrame(const JsonFilePath, BaseFileName: string);
-    procedure FinaliseFrame(var JsonFilePath, BaseFileName: string);
+    procedure InitializeFrame;
+    procedure FinaliseFrame;
   end;
 
 implementation
+
+uses
+  ApplicationOptions;
 
 {$R *.dfm}
 
 { TOfflineCallstackOptionsFrame }
 
-procedure TOfflineCallstackOptionsFrame.FinaliseFrame(var JsonFilePath, BaseFileName: string);
+procedure TOfflineCallstackOptionsFrame.FinaliseFrame;
 begin
-  JsonFilePath := JsonFileSavePathEdit.Text;
-  BaseFileName := BaseFileNameEdit.Text;
+  AppOptions.JsonFileSavePath := JsonFileSavePathEdit.Text;
+  AppOptions.BaseFileName := BaseFileNameEdit.Text;
+  AppOptions.RemoveUnreachableStackFrames := RemoveUnreachableStackFramesCheckbox.Checked;
 end;
 
-procedure TOfflineCallstackOptionsFrame.InitializeFrame(const JsonFilePath, BaseFileName: string);
+procedure TOfflineCallstackOptionsFrame.InitializeFrame;
 begin
-  JsonFileSavePathEdit.Text := JsonFilePath;
-  BaseFileNameEdit.Text := BaseFileName;
+  JsonFileSavePathEdit.Text := AppOptions.JsonFileSavePath;
+  BaseFileNameEdit.Text := AppOptions.BaseFileName;
+  RemoveUnreachableStackFramesCheckbox.Checked := AppOptions.RemoveUnreachableStackFrames;
 end;
 
 end.

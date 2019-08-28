@@ -77,14 +77,25 @@
         <DCCReference Include="RestComponents.dcp"/>
         <DCCReference Include="..\..\source\ApplicationOptions.pas"/>
         <DCCReference Include="..\..\source\CallStack.pas"/>
-        <DCCReference Include="..\..\source\CallStackFrame.pas"/>
         <DCCReference Include="..\..\source\CallStackIDEOptions.pas"/>
         <DCCReference Include="..\..\source\CallStackKeyboardBinding.pas"/>
         <DCCReference Include="..\..\source\CallStackMenus.pas"/>
         <DCCReference Include="..\..\source\CallStackSaveMain.pas"/>
         <DCCReference Include="..\..\source\FileNameCreator.pas"/>
-        <DCCReference Include="..\..\source\IDEOptionsFrame.pas"/>
-        <DCCReference Include="..\..\source\OfflineCallStackForm.pas"/>
+        <DCCReference Include="..\..\source\CallStackFrame.pas">
+            <Form>OfflineCallStackFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\source\IDEOptionsFrame.pas">
+            <Form>OfflineCallstackOptionsFrame</Form>
+            <FormType>dfm</FormType>
+            <DesignClass>TFrame</DesignClass>
+        </DCCReference>
+        <DCCReference Include="..\..\source\OfflineCallStackForm.pas">
+            <Form>OfflineCallStack</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

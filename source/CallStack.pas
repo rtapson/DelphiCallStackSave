@@ -19,6 +19,8 @@ type
   end;
 
   TCallStackWriter = class
+  private
+    class procedure EnsurePathExists(const FileName: string);
   public
     class procedure WriteCallStack(const FileName: string; const CallStack: TObjectList<TCallStackFrame>);
   end;
@@ -31,6 +33,7 @@ type
 implementation
 
 uses
+  System.SysUtils,
   System.Classes,
   System.IOUtils,
   System.JSON,
@@ -114,6 +117,15 @@ end;
 
 { TCallStackWriter }
 
+class procedure TCallStackWriter.EnsurePathExists(const FileName: string);
+var
+  Path: string;
+begin
+  Path := ExtractFilePath(FileName);
+  if not TDirectory.Exists(Path) then
+    TDirectory.CreateDirectory(Path);
+end;
+
 class procedure TCallStackWriter.WriteCallStack(const FileName: string; const CallStack: TObjectList<TCallStackFrame>);
 var
   CallStackFrame: TCallStackFrame;
@@ -123,6 +135,7 @@ var
 
   Temp: TJSONCollectionBuilder.TElements;
 begin
+  EnsurePathExists(FileName);
   StringWriter := TStringWriter.Create;
   MyTextWriter := TJsonTextWriter.Create(StringWriter);
   Builder := TJsonObjectBuilder.Create(MyTextWriter);
