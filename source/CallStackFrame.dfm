@@ -5,6 +5,7 @@ object OfflineCallStackFrame: TOfflineCallStackFrame
   Height = 545
   Align = alClient
   TabOrder = 0
+  OnEnter = FrameEnter
   object CallStackListBox: TListBox
     Left = 0
     Top = 22

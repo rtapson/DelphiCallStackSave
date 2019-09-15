@@ -7,10 +7,13 @@ uses
   System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DockToolForm,
   CallStackFrame,
-    Vcl.ActnList;
+    Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.BaseImageCollection,
+  Vcl.ImageCollection, Vcl.VirtualImageList;
 
 type
   TOfflineCallStack = class(TDockableToolbarForm)
+    ImageCollection1: TImageCollection;
+    VirtualImageList1: TVirtualImageList;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -128,8 +131,11 @@ procedure TOfflineCallStack.CreateToolbarButtons;
 var
   Action, RefreshAction: TAction;
 begin
-  ShowCaptions := True;
+  ToolBar.Images := VirtualImageList1;
+  ToolActionList.Images := VirtualImageList1;
+  //ShowCaptions := True;
   Action := TAction.Create(ToolActionList);
+  Action.ImageIndex := 0;
   Action.Name := 'LoadCallStackAction';
   Action.Caption := 'Load Call Stack';
   //Action.OnExecute := FOfflineCallStackFrame.LoadCallStackExecute;
@@ -137,6 +143,7 @@ begin
   AddToolbarButton(Action);
 
   RefreshAction := TAction.Create(ToolActionList);
+  RefreshAction.ImageIndex := 1;
   RefreshAction.Name := 'RefreshCallStackAction';
   RefreshAction.Caption := 'Refresh';
   RefreshAction.OnExecute := FOfflineCallStackFrame.RefreshStackFiles;
@@ -154,7 +161,10 @@ end;
 procedure TOfflineCallStack.Focus;
 begin
   if Assigned(FOfflineCallStackFrame) and (FOfflineCallStackFrame.Visible) then
+  begin
      FOfflineCallStackFrame.SetFocus;
+     FOfflineCallStackFrame.RefreshStackFiles(Self);
+  end;
 end;
 
 procedure TOfflineCallStack.FormCreate(Sender: TObject);

@@ -30,7 +30,8 @@ package CallStackSaveExpert;
 requires
   rtl,
   DesignIDE,
-  RestComponents;
+  RestComponents,
+  vclwinx;
 
 contains
   CallStackSaveMain in '..\..\source\CallStackSaveMain.pas',

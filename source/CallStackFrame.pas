@@ -18,6 +18,7 @@ type
     procedure CallStackListBoxDblClick(Sender: TObject);
     procedure CallStackListBoxDrawItem(Control: TWinControl; Index: Integer;
       Rect: TRect; State: TOwnerDrawState);
+    procedure FrameEnter(Sender: TObject);
   private
     FOnSelectionChange: TSelectionChange;
     FOnFocus: TNotifyEvent;
@@ -31,6 +32,7 @@ type
     procedure LoadCallStackData;
     procedure LoadCallStackExecute(Sender: TObject);
     procedure RefreshStackFiles(Sender: TObject);
+    procedure RefreshData;
 
     property OnSelectionChange: TSelectionChange read FOnSelectionChange write FOnSelectionChange;
     property OnFocus: TNotifyEvent read FOnFocus write FOnFocus;
@@ -93,6 +95,11 @@ begin
     FillRect(Rect);
     TextOut(Rect.Left, Rect.Top, (Control as TListBox).Items[Index]);
   end;
+end;
+
+procedure TOfflineCallStackFrame.FrameEnter(Sender: TObject);
+begin
+  if Assigned(FOnFocus) then OnFocus(Self);
 end;
 
 procedure TOfflineCallStackFrame.LoadCallStackData;
@@ -188,6 +195,11 @@ begin
     end;
   end;
 
+end;
+
+procedure TOfflineCallStackFrame.RefreshData;
+begin
+  LoadCallStackData;
 end;
 
 procedure TOfflineCallStackFrame.RefreshStackFiles(Sender: TObject);

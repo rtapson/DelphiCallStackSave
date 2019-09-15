@@ -38,7 +38,8 @@ implementation
 uses
   Vcl.Forms,
   CallStackKeyboardBinding,
-  OfflineCallStackForm;
+  OfflineCallStackForm,
+  CallStackFrame;
 
 Var
   iWizard : Integer = 0;
@@ -49,6 +50,7 @@ begin
   Result := TCallStackSaveExpert.Create;
   Application.Handle := (BIDES As IOTAServices).GetParentHandle;
   TOfflineCallStack.CreateDockableOfflineCallStack;
+  TOfflineCallStack.HookEventHandlers(Result.SelectionChanged, Result.Focus, Result.OptionsChange);
 end;
 
 function InitWizard(Const BorlandIDEServices : IBorlandIDEServices;
@@ -76,8 +78,6 @@ begin
   inherited Create;
   FOptionsFrame := TCallStackIDEOptions.Create;
   (BorlandIDEServices as INTAEnvironmentOptionsServices).RegisterAddInOptions(FOptionsFrame);
-
-  TOfflineCallStack.HookEventHandlers(SelectionChanged, Focus, OptionsChange);
 end;
 
 destructor TCallStackSaveExpert.Destroy;
@@ -100,7 +100,7 @@ end;
 
 procedure TCallStackSaveExpert.Focus(Sender: TObject);
 begin
-
+  (Sender as TOfflineCallStackFrame).LoadCallStackData;
 end;
 
 function TCallStackSaveExpert.GetIDString: string;

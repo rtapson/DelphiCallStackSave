@@ -41,7 +41,7 @@ procedure TCallStackKeyboardBinding.CallStackSave(const Context: IOTAKeyContext;
 var
   CallStackFileName: string;
 begin
-  CallStackFileName := AppOptions.JsonFileSavePath + FileNameCreator.FileName;
+  CallStackFileName := FileNameCreator.FileName;
   SaveCallStack(CallStackFileName);
   BindingResult := krHandled;
 end;
@@ -53,7 +53,7 @@ var
 begin
   if InputQuery('Enter Call Stack Name', 'Call Stack Name:', CallStackFileName) then
   begin
-    CallStackFileName := AppOptions.JsonFileSavePath + CallStackFileName;
+    CallStackFileName := FileNameCreator.FileName(CallStackFileName);
     SaveCallStack(CallStackFileName);
   end;
   BindingResult := krHandled;
