@@ -4,16 +4,13 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
-  System.Classes, Vcl.Graphics,
+  System.Classes, Vcl.Graphics, Vcl.ActnList, System.ImageList, Vcl.ImgList,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, DockToolForm,
-  CallStackFrame,
-    Vcl.ActnList, System.ImageList, Vcl.ImgList, Vcl.BaseImageCollection,
-  Vcl.ImageCollection, Vcl.VirtualImageList;
+  CallStackFrame;
 
 type
   TOfflineCallStack = class(TDockableToolbarForm)
-    ImageCollection1: TImageCollection;
-    VirtualImageList1: TVirtualImageList;
+    ImageList1: TImageList;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
@@ -131,8 +128,8 @@ procedure TOfflineCallStack.CreateToolbarButtons;
 var
   Action, RefreshAction: TAction;
 begin
-  ToolBar.Images := VirtualImageList1;
-  ToolActionList.Images := VirtualImageList1;
+  ToolBar.Images := ImageList1;
+  ToolActionList.Images := ImageList1;
   //ShowCaptions := True;
   Action := TAction.Create(ToolActionList);
   Action.ImageIndex := 0;
