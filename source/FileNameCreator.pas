@@ -39,8 +39,8 @@ end;
 { TFileNameCreator }
 
 function TFileNameCreator.GetFileName: string;
-var
-  FileCount: Integer;
+//var
+//  FileCount: Integer;
 begin
   Result := GetFileName(AppOptions.BaseFileName);
 end;

@@ -61,7 +61,7 @@ var
 
   JsonString, Header, ModuleFileName: string;
   LineNumber: Integer;
-  CallStackFrame: TCallStackFrame;
+//  CallStackFrame: TCallStackFrame;
 begin
   if FileName = '' then Exit;
   try
@@ -70,6 +70,7 @@ begin
     Exit;
   end;
   CallStack.Clear;
+  LineNumber := 0;
   
   StringReader := TStringReader.Create(JsonString);
   try
