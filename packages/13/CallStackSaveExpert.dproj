@@ -175,9 +175,9 @@
         <DCCReference Include="..\..\source\CallStackIDEOptions.pas"/>
         <DCCReference Include="..\..\source\ApplicationOptions.pas"/>
         <DCCReference Include="..\..\source\FileNameCreator.pas"/>
-        <RcItem Include="..\..\source\Images\Share.svg">
-            <ResourceType>RCDATA</ResourceType>
-            <ResourceId>LogoImage_1</ResourceId>
+        <RcItem Include="..\..\source\Images\logo.bmp">
+            <ResourceType>BITMAP</ResourceType>
+            <ResourceId>LOGO_BMP</ResourceId>
         </RcItem>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
@@ -205,13 +205,13 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="5">
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\CallStackSaveExpert.bpl" Configuration="Debug" Class="ProjectOutput"/>
-                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\37.0\Bpl\CallStackSaveExpert.bpl" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="..\..\bin\D13\Win32\Debug\CallStackSaveExpert.bpl" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
                         <RemoteName>CallStackSaveExpert.bpl</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
+                <DeployFile LocalName="C:\Users\Public\Documents\Embarcadero\Studio\20.0\Bpl\CallStackSaveExpert.bpl" Configuration="Debug" Class="ProjectOutput"/>
                 <DeployClass Name="AdditionalDebugSymbols">
                     <Platform Name="OSX32">
                         <Operation>1</Operation>

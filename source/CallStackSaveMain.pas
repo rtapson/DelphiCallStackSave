@@ -36,6 +36,7 @@ implementation
 uses
   SysUtils,
   Vcl.Forms,
+  Vcl.Graphics,
   CallStackKeyboardBinding,
   OfflineCallStackForm,
   CallStackFrame,
@@ -139,16 +140,14 @@ end;
 
 procedure Register;
 var
-  SplashServices: IOTASplashScreenServices;
+  Logo: TPicture;
 begin
   iWizard := (BorlandIDEServices as IOTAWizardServices).AddWizard(InitialiseWizard(BorlandIDEServices));
   AppOptions.KeyBindingIndex := (BorlandIDEServices as IOTAKeyboardServices).AddKeyboardBinding(TCallStackKeyboardBinding.Create);
 
-  if Supports(BorlandIDEServices, IOTASplashScreenServices, SplashServices) then
-  begin
-    SplashServices.AddPluginBitmap('Call Stack Save', nil);
-  end;
-
+  Logo := TPicture.Create;
+  Logo.Bitmap.LoadFromResourceName(HInstance, 'LOGO_BMP');
+  SplashScreenServices.AddPluginBitmap('Call Stack Save', Logo.Bitmap.Handle);
 end;
 
 initialization
