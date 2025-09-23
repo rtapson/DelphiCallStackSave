@@ -141,6 +141,7 @@ end;
 procedure Register;
 var
   Logo: TPicture;
+  AboutBoxServices: IOTAAboutBoxServices;
 begin
   iWizard := (BorlandIDEServices as IOTAWizardServices).AddWizard(InitialiseWizard(BorlandIDEServices));
   AppOptions.KeyBindingIndex := (BorlandIDEServices as IOTAKeyboardServices).AddKeyboardBinding(TCallStackKeyboardBinding.Create);
@@ -148,6 +149,11 @@ begin
   Logo := TPicture.Create;
   Logo.Bitmap.LoadFromResourceName(HInstance, 'LOGO_BMP');
   SplashScreenServices.AddPluginBitmap('Call Stack Save', Logo.Bitmap.Handle);
+
+  if Supports(BorlandIDEServices, IOTAAboutBoxServices, AboutBoxServices) then
+  begin
+    AboutBoxServices.AddPluginInfo('Call Stack Save', '', Logo.Bitmap.Handle);
+  end;
 end;
 
 initialization
