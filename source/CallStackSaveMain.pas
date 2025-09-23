@@ -19,8 +19,6 @@ type
     constructor Create;
     destructor Destroy; override;
 
-
-
     procedure Execute;
     function GetIDString: string;
     function GetName: string;
