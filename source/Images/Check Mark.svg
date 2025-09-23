@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40" width="40px" height="40px" baseProfile="basic">
+  <path fill="#b2b2b2" d="M29.949,13.288C31.244,15.204,32,17.514,32,20c0,6.627-5.373,12-12,12S8,26.627,8,20 c0-6.627,5.373-12,12-12c3.589,0,6.801,1.584,9,4.081V6.773C26.435,5.025,23.338,4,20,4C11.163,4,4,11.163,4,20s7.163,16,16,16 s16-7.163,16-16c0-3.387-1.059-6.523-2.855-9.109L29.949,13.288z" />
+  <linearGradient id="8mMtM9u5CGUdfJLKNssI1a" x1="22.287" x2="35.281" y1="6.624" y2="11.61" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#b2b2b2" />
+    <stop offset="1" />
+  </linearGradient>
+  <path fill="url(#8mMtM9u5CGUdfJLKNssI1a)" d="M19.565,8.022C19.711,8.017,19.853,8,20,8c3.589,0,6.801,1.584,9,4.081V6.773 c-2.382-1.624-5.227-2.612-8.293-2.746L19.565,8.022z" />
+  <linearGradient id="8mMtM9u5CGUdfJLKNssI1b" x1="22.976" x2="19.332" y1="18.918" y2="36.033" gradientUnits="userSpaceOnUse">
+    <stop offset="0" stop-color="#b2b2b2" />
+    <stop offset="1" />
+  </linearGradient>
+  <path fill="url(#8mMtM9u5CGUdfJLKNssI1b)" d="M29,7v5c-3.702,3.383-6.493,8.021-7.596,13 h-4.265C18.686,16.718,23.63,10.375,29,7z" />
+  <polygon fill="#b2b2b2" points="14.383,14.021 11.766,16.957 17.132,25 21.41,25" />
+</svg>

@@ -36,14 +36,15 @@ procedure Register;
 implementation
 
 uses
+  SysUtils,
   Vcl.Forms,
   CallStackKeyboardBinding,
   OfflineCallStackForm,
-  CallStackFrame;
+  CallStackFrame,
+  ApplicationOptions;
 
 Var
   iWizard : Integer = 0;
-  iKeyboardBindingIndex : Integer = 0;
 
 function InitialiseWizard(BIDES : IBorlandIDEServices) : TCallStackSaveExpert;
 begin
@@ -139,16 +140,24 @@ begin
 end;
 
 procedure Register;
+var
+  SplashServices: IOTASplashScreenServices;
 begin
   iWizard := (BorlandIDEServices as IOTAWizardServices).AddWizard(InitialiseWizard(BorlandIDEServices));
-  iKeyboardBindingIndex := (BorlandIDEServices as IOTAKeyboardServices).AddKeyboardBinding(TCallStackKeyboardBinding.Create);
+  AppOptions.KeyBindingIndex := (BorlandIDEServices as IOTAKeyboardServices).AddKeyboardBinding(TCallStackKeyboardBinding.Create);
+
+  if Supports(BorlandIDEServices, IOTASplashScreenServices, SplashServices) then
+  begin
+    SplashServices.AddPluginBitmap('Call Stack Save', nil);
+  end;
+
 end;
 
 initialization
 
 finalization
-  if iKeyboardBindingIndex > 0 then
-    (BorlandIDEServices as IOTAKeyboardServices).RemoveKeyboardBinding(iKeyboardBindingIndex);
+  if AppOptions.KeyBindingIndex > 0 then
+    (BorlandIDEServices as IOTAKeyboardServices).RemoveKeyboardBinding(AppOptions.KeyBindingIndex);
 
   if iWizard > 0 then
     (BorlandIDEServices as IOTAWizardServices).RemoveWizard(iWizard);

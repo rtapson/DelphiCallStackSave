@@ -48,7 +48,7 @@ end;
 
 function TCallStackIDEOptions.GetCaption: string;
 begin
-  Result := 'Offline Call Stack.Options';
+  Result := 'Offline Call Stack';
 end;
 
 function TCallStackIDEOptions.GetFrameClass: TCustomFrameClass;

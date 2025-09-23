@@ -8,7 +8,8 @@ uses
 type
   TCallStackKeyboardBinding = class(TNotifierObject, IOTAKeyboardBinding)
   private
-    procedure SaveCallStack(const FileName: string);
+    procedure BuildFileName(var BindingResult: TKeyBindingResult);
+    procedure SaveCallStack();
     procedure CallStackSave(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
     procedure CallStackSaveWithName(const Context: IOTAKeyContext; KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
   protected
@@ -22,6 +23,7 @@ implementation
 
 uses
   System.Generics.Collections,
+  SysUtils,
   Vcl.Dialogs,
   Vcl.Menus,
   CallStack,
@@ -32,30 +34,37 @@ uses
 
 procedure TCallStackKeyboardBinding.BindKeyboard(const BindingServices: IOTAKeyBindingServices);
 begin
-  BindingServices.AddKeyBinding([TextToShortCut('Ctrl+Alt+Q')], CallStackSave, nil);
-  BindingServices.AddKeyBinding([TextToShortCut('Ctrl+Alt+A')], CallStackSaveWithName, nil);
+  AppOptions.QuickSaveKeyBindingEnabled := BindingServices.AddKeyBinding([TextToShortCut(AppOptions.QuickSaveKeyBinding)], CallStackSave, nil);
+  AppOptions.SaveKeyBindingEnabled := BindingServices.AddKeyBinding([TextToShortCut(AppOptions.SaveKeyBinding)], CallStackSaveWithName, nil);
 end;
 
-procedure TCallStackKeyboardBinding.CallStackSave(const Context: IOTAKeyContext;
-  KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
-var
-  CallStackFileName: string;
-begin
-  CallStackFileName := FileNameCreator.FileName;
-  SaveCallStack(CallStackFileName);
-  BindingResult := krHandled;
-end;
-
-procedure TCallStackKeyboardBinding.CallStackSaveWithName(const Context: IOTAKeyContext; KeyCode: TShortCut;
-  var BindingResult: TKeyBindingResult);
+procedure TCallStackKeyboardBinding.BuildFileName(var BindingResult: TKeyBindingResult);
 var
   CallStackFileName: string;
 begin
   if InputQuery('Enter Call Stack Name', 'Call Stack Name:', CallStackFileName) then
   begin
-    CallStackFileName := FileNameCreator.FileName(CallStackFileName);
-    SaveCallStack(CallStackFileName);
+    if not CallStackFileName.IsEmpty then
+      AppOptions.BaseFileName := CallStackFileName;
   end;
+end;
+
+procedure TCallStackKeyboardBinding.CallStackSave(const Context: IOTAKeyContext;
+  KeyCode: TShortCut; var BindingResult: TKeyBindingResult);
+begin
+  if AppOptions.BaseFileName.IsEmpty then
+  begin
+    BuildFileName(BindingResult);
+  end;
+  SaveCallStack();
+  BindingResult := krHandled;
+end;
+
+procedure TCallStackKeyboardBinding.CallStackSaveWithName(const Context: IOTAKeyContext; KeyCode: TShortCut;
+  var BindingResult: TKeyBindingResult);
+begin
+  BuildFileName(BindingResult);
+  SaveCallStack();
   BindingResult := krHandled;
 end;
 
@@ -66,7 +75,7 @@ end;
 
 function TCallStackKeyboardBinding.GetDisplayName: string;
 begin
-  Result := 'Call Stack Keyboard Bingings';
+  Result := 'Save Call Stack Commands';
 end;
 
 function TCallStackKeyboardBinding.GetName: string;
@@ -74,7 +83,7 @@ begin
   Result := 'CallStackKeyboardBingings';
 end;
 
-procedure TCallStackKeyboardBinding.SaveCallStack(const FileName: string);
+procedure TCallStackKeyboardBinding.SaveCallStack();
 var
   CurrentProc: IOTAProcess;
   TheThread: IOTAThread;
@@ -106,7 +115,7 @@ begin
                CallStackList.Add(TCallStackFrame.Create(TheThread.CallHeaders[i], FrameFileName, LineNumber));
            end;
         end;
-        TCallStackWriter.WriteCallStack(FileName, CallStackList);
+        TCallStackWriter.WriteCallStack(TFileNameCreator.FileName, CallStackList);
       finally
         CallStackList.Free;
       end;
@@ -116,3 +125,5 @@ begin
 end;
 
 end.
+
+
